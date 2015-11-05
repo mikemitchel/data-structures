@@ -7,6 +7,7 @@ var Queue = function(){
   var nextInQueue = 0;
   // Implement the methods below
 
+
   someInstance.enqueue = function(value){
     storage[itemNumber] = value;
     itemNumber++;
