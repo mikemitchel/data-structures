@@ -23,3 +23,8 @@ Stack.prototype.size = function () {
 }
 
 
+Queue.prototype.peek = function () {
+  return this.storage[this.topItem];
+}
+
+
