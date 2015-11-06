@@ -5,14 +5,12 @@ var BinarySearchTree = function(value){
   tree.value = value;
   tree.dupes = 0;
 
-
   return tree;
-};
+}
 
 var biTreeMethods = {};
 
 biTreeMethods.insert = function(value) {
-
   var pos = this.side(value);
 
   if (pos === 'exists') {
@@ -47,6 +45,15 @@ biTreeMethods.contains = function(target) {
 }
 
 biTreeMethods.depthFirstLog = function(cb) {
+
+  cb(this.value);
+
+  if (this.left !== null) {
+    this.left.depthFirstLog(cb);
+  }
+  if (this.right !== null) {
+    this.right.depthFirstLog(cb);
+  }
 
 }
 
