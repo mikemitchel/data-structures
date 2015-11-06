@@ -13,25 +13,37 @@ var biTreeMethods = {};
 
 biTreeMethods.insert = function(value) {
 
-  if (value === this.value) {
+  var pos = this.side(value);
+
+  if (pos === 'exists') {
     this.dupes++;
-  } else if (value < this.value) {
-    if (this.left === null) {
-      this.left = BinarySearchTree(value);
-    } else {
-      this.left.insert(value);
-    }
+  } else if (this[pos] === null) {
+    this[pos] = BinarySearchTree(value);
   } else {
-    if (this.right === null) {
-      this.right = BinarySearchTree(value);
-    } else {
-      this.right.insert(value);
-    }
+    this[pos].insert(value);
   }
 }
 
-biTreeMethods.contains = function(target) {
+biTreeMethods.side = function(value) {
+   if (value < this.value) {
+     return 'left';
+   } else if (value > this.value) {
+     return 'right';
+   } else {
+     return 'exists';
+   }
+}
 
+biTreeMethods.contains = function(target) {
+  var pos = this.side(target);
+
+  if (pos === 'exists') {
+    return true;
+  } else if (this[pos] === null) {
+    return false;
+  } else {
+    return this[pos].contains(target)
+  }
 }
 
 biTreeMethods.depthFirstLog = function(cb) {
