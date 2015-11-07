@@ -1,30 +1,46 @@
  var HashTable = function(){
   this._limit = 8;
   this._storage = LimitedArray(this._limit);
-  this._collisions = {};
+
 };
 
 HashTable.prototype.insert = function(key, value){
   var i = getIndexBelowMaxForKey(key, this._limit);
-  if (this._storage[i] !== value && this._storage[i] !== null && this._storage[i] !== undefined) {
-    this._collisions[key] = value;
-  } else {
-    this._storage[i] = value;
+  var bucket = this._storage.get(i); // the bucket object that can call get,set,each
+  var found = false;
+
+  if (!bucket) {
+     bucket = [];
+     this._storage.set(i, bucket);
   }
+  // console.log(bucket.length);
+  for (var j = 0; j < bucket.length; i++) {
+    if (bucket[j][0] === key) {
+      bucket[j][1] = value;
+      found = true;
+      break;
+    }
+  }
+
+  if (!found) {
+    bucket.push([key, value]);
+  }
+
 };
 
 HashTable.prototype.retrieve = function(key){
   var i = getIndexBelowMaxForKey(key, this._limit);
-  if (this._collisions.hasOwnProperty(key)) {
-    return this._collisions[key];
-  } else {
-    return this._storage[i];
-  }
+  var bucket = this._storage.get(i);
+  for (var j = 0; j < bucket.length; j++) {
+      if (bucket[j][0] === key) {
+        return bucket[j][1];
+      }
+    }
 };
 
 HashTable.prototype.remove = function(key){
   var i = getIndexBelowMaxForKey(key, this._limit);
-  this._storage[i] = null;
+
 };
 
 
@@ -35,6 +51,4 @@ HashTable.prototype.remove = function(key){
  retrieve is O(1),
  remove is O(1)
  */
-
-
 
