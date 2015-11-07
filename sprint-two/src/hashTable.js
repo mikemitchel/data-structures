@@ -6,7 +6,10 @@
 HashTable.prototype.insert = function(key, value){
   var i = getIndexBelowMaxForKey(key, this._limit);
   //push the k/v pair into the bucket[index]
-  this._storage[i] = value;
+  if (this.retrieve(key) !== value) {
+    this._storage[i] = value;
+  }
+
 };
 
 HashTable.prototype.retrieve = function(key){
