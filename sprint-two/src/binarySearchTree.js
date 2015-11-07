@@ -60,4 +60,5 @@ biTreeMethods.depthFirstLog = function(cb) {
 
 /*
  * Complexity: What is the time complexity of the above functions?
+ .insert O(log), .side o(1), .contains O(n);, .depthFirstLog 0(n)
  */
